@@ -71,7 +71,12 @@ std::string decomposicao_zyz(Eigen::Matrix2cd M) {
     double beta  = x(1);
     double delta = x(2);
 
-    cout << "\nalpha: " << alpha << "\nbeta: " << beta << "\ndelta: " << delta << "\n";
+    cout << "\nalpha: " << alpha << "\nbeta: " << beta << "\ndelta: " << delta << "\n\n";
+    
+    complex<double> detU = M.determinant();
+    double global_phase_angle = arg(detU) / 2.0;
+
+    cout << "global phase angle: " << global_phase_angle << "\n\n";
 
     // TODO: return qasm text
     return "QASM not implemented!\n";
