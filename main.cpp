@@ -72,7 +72,7 @@ std::string decomposicao_zyz(Eigen::Matrix2cd M) {
     double delta_rot_z2 = x(2);
 
     complex<double> detU = M.determinant();
-    double global_phase_angle = arg(detU) / 2.0;
+    double global_phase_angle = arg(detU) / 2.0; // alpha
 
     cout << "\nbeta: " << beta_rot_z1 << "\ngamma: " << gamma_rot_y << "\ndelta: " << delta_rot_z2 << "\n\n";
 
@@ -80,7 +80,21 @@ std::string decomposicao_zyz(Eigen::Matrix2cd M) {
     cout << "global phase angle: " << global_phase_angle << "\n\n";
 
     // TODO: return qasm text
-    return "QASM not implemented!\n";
+    stringstream qasm;
+    qasm << "OPENQASM 2.0;\n";
+    qasm << "include \"qelib1.inc\";\n\n";
+    qasm << "qreg q[1];\n\n";
+
+    // rotations in inverse order
+    qasm << "rz(" << delta_rot_z2 << ") q[0]; // Rz(delta)\n";
+    qasm << "ry(" << gamma_rot_y  << ") q[0]; // Ry(gamma)\n";
+    qasm << "rz(" << beta_rot_z1  << ") q[0]; // Rz(beta)\n";
+    
+    // global phase
+    qasm << "p(" << global_phase_angle << ") q[0]; // Global Phase e^(i*alpha)\n";
+
+
+    return qasm.str();
 }
 
 Eigen::Matrix2cd Ry(double theta) {
