@@ -67,14 +67,15 @@ std::string decomposicao_zyz(Eigen::Matrix2cd M) {
     // Find x for Ax = b
     Eigen::Vector3d x = A.lu().solve(b);
 
-    double alpha = x(0);
-    double beta  = x(1);
-    double delta = x(2);
+    double beta_rot_z1 = x(0);
+    double gamma_rot_y  = x(1);
+    double delta_rot_z2 = x(2);
 
-    cout << "\nalpha: " << alpha << "\nbeta: " << beta << "\ndelta: " << delta << "\n\n";
-    
     complex<double> detU = M.determinant();
     double global_phase_angle = arg(detU) / 2.0;
+
+    cout << "\nbeta: " << beta_rot_z1 << "\ngamma: " << gamma_rot_y << "\ndelta: " << delta_rot_z2 << "\n\n";
+
 
     cout << "global phase angle: " << global_phase_angle << "\n\n";
 
