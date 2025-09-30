@@ -16,7 +16,6 @@ Eigen::Matrix2cd Ry(double theta);
 
 // global variables
 complex<double> i(0.0, 1.0);
-complex<double> e = exp(1.0);
 
 int main() {
     // Qubit |0⟩ - [1, 0]
@@ -86,7 +85,8 @@ Eigen::Matrix2cd Ry(double theta) {
 }
 Eigen::Matrix2cd Rz(double theta) {
     Eigen::Matrix2cd matriz;
-    matriz << pow(e, -((theta/2) * i)), 0,
-              0,  pow(e, ((theta/2) * i));
+    matriz << exp(-((theta/2) * i)), 0,
+              0,  exp((theta/2) * i);
+
     return matriz;
 }
